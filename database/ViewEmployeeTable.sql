@@ -1,0 +1,1 @@
+SELECT * FROM kanbanBoard.employees;

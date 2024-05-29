@@ -1,0 +1,1 @@
+INSERT INTO `kanbanBoard`.`employees` (`staff_id`, `first_name`, `last_name`, `department`, `gender`, `birth_date`, `hire_date`, `mobile_number`, `adminstrative_rights`) VALUES ('00001', 'admin', 'admin', 'HR', 'F', '1973-12-31', '2000-12-12', '91234567', '1');
