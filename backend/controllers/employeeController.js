@@ -9,3 +9,40 @@ exports.viewAllEmployees = (request, response) => {
     }
   });
 };
+
+exports.addNewEmployee = (request, response) => {
+  const {
+    id,
+    first_name,
+    last_name,
+    department,
+    gender,
+    birth_date,
+    hire_date,
+    mobile_number,
+    adminstrative_rights,
+    password,
+  } = request.body;
+
+  const query =
+    "INSERT INTO employees ( id, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  const params = [
+    id,
+    first_name,
+    last_name,
+    department,
+    gender,
+    birth_date,
+    hire_date,
+    mobile_number,
+    adminstrative_rights,
+    password,
+  ];
+  mysql.query(query, params, (error, result) => {
+    if (error) {
+      console.log("Fail to create new user - " + error);
+    } else {
+      response.send("New employee created successfully.");
+    }
+  });
+};
