@@ -13,6 +13,7 @@ exports.viewAllEmployees = (request, response) => {
 exports.addNewEmployee = (request, response) => {
   const {
     id,
+    username,
     first_name,
     last_name,
     department,
@@ -25,9 +26,10 @@ exports.addNewEmployee = (request, response) => {
   } = request.body;
 
   const query =
-    "INSERT INTO employees ( id, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO employees ( id, username, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   const params = [
     id,
+    username,
     first_name,
     last_name,
     department,
