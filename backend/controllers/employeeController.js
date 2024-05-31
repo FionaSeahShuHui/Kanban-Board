@@ -14,7 +14,6 @@ exports.viewAllEmployees = (request, response) => {
 exports.addNewEmployee = (request, response) => {
   const {
     id,
-    username,
     first_name,
     last_name,
     department,
@@ -25,6 +24,8 @@ exports.addNewEmployee = (request, response) => {
     adminstrative_rights,
     password,
   } = request.body;
+
+  const username = first_name + "_" + last_name;
 
   const query =
     "INSERT INTO employees ( id, username, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
