@@ -48,3 +48,18 @@ exports.addNewEmployee = (request, response) => {
     }
   });
 };
+
+exports.removeEmployee = (request, response) => {
+  const { id } = request.body;
+
+  const query = "DELETE FROM employees WHERE id = ?;";
+  const params = [id];
+
+  mysql.query(query, params, (error, result) => {
+    if (error) {
+      console.log("Fail to delete user - " + error);
+    } else {
+      response.send("Employee deleted successfully.");
+    }
+  });
+};
