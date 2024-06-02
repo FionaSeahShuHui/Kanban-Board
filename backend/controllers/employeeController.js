@@ -14,7 +14,6 @@ exports.viewAllEmployees = (request, response) => {
 exports.addNewEmployee = (request, response) => {
   const {
     id,
-    username,
     first_name,
     last_name,
     department,
@@ -25,6 +24,8 @@ exports.addNewEmployee = (request, response) => {
     adminstrative_rights,
     password,
   } = request.body;
+
+  const username = first_name + "_" + last_name;
 
   const query =
     "INSERT INTO employees ( id, username, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -61,8 +62,13 @@ exports.removeEmployee = (request, response) => {
     if (error) {
       console.log("Fail to delete user - " + error);
     } else {
-      console.log("Employee deleted successfully.");
-      response.send("Employee deleted successfully.");
+      if (result.affectedRows == 0) {
+        console.log("Employee ID could not be found.");
+        response.send("Employee ID could not be found.");
+      } else {
+        console.log("Employee deleted successfully.");
+        response.send("Employee deleted successfully.");
+      }
     }
   });
 };
