@@ -3,9 +3,8 @@ const mysql = require("../database");
 exports.viewAllEmployees = (request, response) => {
   mysql.query("SELECT * FROM kanbanBoard.employees;", (error, result) => {
     if (error) {
-      console.log("Fail to display all employees - " + error);
+      response.send("Fail to display all employees - " + error);
     } else {
-      console.log("Display all employees successfully.");
       response.send(result);
     }
   });
@@ -13,7 +12,6 @@ exports.viewAllEmployees = (request, response) => {
 
 exports.addNewEmployee = (request, response) => {
   const {
-    id,
     first_name,
     last_name,
     department,
@@ -25,31 +23,47 @@ exports.addNewEmployee = (request, response) => {
     password,
   } = request.body;
 
+  let id = 0;
+
   const username = first_name + "_" + last_name;
 
-  const query =
-    "INSERT INTO employees ( id, username, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-  const params = [
-    id,
-    username,
-    first_name,
-    last_name,
-    department,
-    gender,
-    birth_date,
-    hire_date,
-    mobile_number,
-    adminstrative_rights,
-    password,
-  ];
-  mysql.query(query, params, (error, result) => {
-    if (error) {
-      console.log("Fail to create new user - " + error);
-    } else {
-      console.log("New employee created successfully.");
-      response.send("New employee created successfully.");
+  mysql.query(
+    "SELECT * FROM employees ORDER BY id DESC LIMIT 1;",
+    (error, result) => {
+      if (error) {
+        response.send("Fail to get the last entry in the database: " + error);
+      } else {
+        id = result[0].id + 1;
+        const query =
+          "INSERT INTO employees ( id, username, first_name, last_name, department, gender, birth_date, hire_date, mobile_number, adminstrative_rights,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        const params = [
+          id,
+          username,
+          first_name,
+          last_name,
+          department,
+          gender,
+          birth_date,
+          hire_date,
+          mobile_number,
+          adminstrative_rights,
+          password,
+        ];
+
+        mysql.query(query, params, (error, result) => {
+          if (error) {
+            if (error.errno == 1062) {
+              response.send("Employee ID exists");
+            } else {
+              response.send("Fail to create new user - " + error);
+            }
+          } else {
+            response.send("New employee created successfully.");
+          }
+        });
+      }
     }
-  });
+  );
 };
 
 exports.removeEmployee = (request, response) => {
@@ -60,13 +74,11 @@ exports.removeEmployee = (request, response) => {
 
   mysql.query(query, params, (error, result) => {
     if (error) {
-      console.log("Fail to delete user - " + error);
+      response.send("Fail to delete user - " + error);
     } else {
       if (result.affectedRows == 0) {
-        console.log("Employee ID could not be found.");
         response.send("Employee ID could not be found.");
       } else {
-        console.log("Employee deleted successfully.");
         response.send("Employee deleted successfully.");
       }
     }
