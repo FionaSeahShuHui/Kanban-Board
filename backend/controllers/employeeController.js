@@ -62,8 +62,13 @@ exports.removeEmployee = (request, response) => {
     if (error) {
       console.log("Fail to delete user - " + error);
     } else {
-      console.log("Employee deleted successfully.");
-      response.send("Employee deleted successfully.");
+      if (result.affectedRows == 0) {
+        console.log("Employee ID could not be found.");
+        response.send("Employee ID could not be found.");
+      } else {
+        console.log("Employee deleted successfully.");
+        response.send("Employee deleted successfully.");
+      }
     }
   });
 };
