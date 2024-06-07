@@ -1,16 +1,18 @@
 import React from "react";
 
-import { Card, Button, TextField, IconButton, Stack, Box } from "@mui/material";
+import axios from "axios";
 
-import { FaUser } from "@react-icons/all-files/fa/FaUser";
-import { RiLockPasswordFill } from "@react-icons/all-files/ri/RiLockPasswordFill";
-// import { MdOutlineVisibility } from "@react-icons/all-files/md/MdOutlineVisibility";
-// import { MdOutlineVisibilityOff } from "@react-icons/all-files/md/MdOutlineVisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
+import {
+  Card,
+  Button,
+  TextField,
+  IconButton,
+  Stack,
+  Box,
+  InputAdornment,
+} from "@mui/material";
 
-// import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
+import { Person, Visibility, Https, VisibilityOff } from "@mui/icons-material";
 
 import "../assets/styles/login.css";
 
@@ -33,7 +35,11 @@ export default function Login() {
             id="username"
             label="Username"
             InputProps={{
-              startAdornment: <FaUser />,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person />
+                </InputAdornment>
+              ),
             }}
           />
           <TextField
@@ -43,7 +49,7 @@ export default function Login() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <RiLockPasswordFill />
+                  <Https />
                 </InputAdornment>
               ),
               endAdornment: (
@@ -61,8 +67,9 @@ export default function Login() {
               ),
             }}
           />
-
-          <Button variant="contained">Submit</Button>
+          <Button onClick={fetchData} variant="contained">
+            Submit
+          </Button>
         </Stack>
       </Card>
     </Box>
