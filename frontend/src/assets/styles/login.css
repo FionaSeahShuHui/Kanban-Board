@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+.boxClass {
+  padding: 20px;
+}
+
+.cardClass {
+  padding: 50px;
+}
+
+.cardClass h1 {
+  text-align: center;
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.cardClass #username {
+  margin-left: 10px;
+}
